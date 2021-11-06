@@ -24,6 +24,9 @@ namespace Cynthesizer
         }
         static void Main(string[] args)
         {
+            MidiTest.listDevices();
+            MidiTest.handleMidiMessages();
+            NoteFrequency.testHalfSteps();
             Console.WriteLine("Hello World!");
             NoteFrequency.NoteToHz('A', 4, ' ');
             NoteFrequency.NoteToHz('B', 4, ' ');
@@ -46,7 +49,6 @@ namespace Cynthesizer
                 Frequency = NoteFrequency.NoteToHz('G', 4, ' '),
                 Type = SignalGeneratorType.Sin
             };
-
             //var c4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('C', 4, ' '), 0);
             //var e4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('E', 4, ' '), 0);
             //var g4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('G', 4, ' '), 0);
@@ -60,7 +62,9 @@ namespace Cynthesizer
                 wo.Play();
                 while (wo.PlaybackState == PlaybackState.Playing)
                 {
-                   
+                    c4Wave.Frequency += 0.5;
+                    g4Wave.Frequency += 0.5;
+                    e4Wave.Frequency += 0.5;
                     //sine20Seconds.Frequency = GetKeyFreq();
                     //uncomment code below to make frequency change over time
                     // DateTime t = DateTime.Now;

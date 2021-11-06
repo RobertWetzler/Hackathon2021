@@ -20,9 +20,23 @@ namespace Cynthesizer
         //number of half steps from A4
         private static int HalfStepsFromA4(char note = 'A', int scale = 4, char accidental = ' ')
         {
-            int noteDif = note - 'A';
+
+            Dictionary<char, int> offsetFromA = new Dictionary<char, int>()
+            {
+                { 'C', -9 },
+                { 'D', -7 },
+                {'E', -5 },
+                {'F', -4 },
+                {'G', -2 }
+            };
+
+
+            char[] scaleOrder = new char[] { 'C', 'D', 'E', 'F', 'G', 'A', 'B' };
+            int scaleIndex = Array.IndexOf(scaleOrder, note);
             int scaleDif = scale - 4;
-            int result = scaleDif * 12 + noteDif;
+            return 0;
+           // int result = scaleDif * 12 + offsetFromA;
+           /**
             int mult = Math.Sign(noteDif);
             if (note >= 'B')
             {
@@ -49,6 +63,17 @@ namespace Cynthesizer
                 result -= 1;
             }
             return result;
+           */
+        }
+        public static void testHalfSteps()
+        {
+            int steps = HalfStepsFromA4('A', 4);
+            steps = HalfStepsFromA4('B', 4);
+            steps = HalfStepsFromA4('C', 4);
+            steps = HalfStepsFromA4('D', 4);
+            steps = HalfStepsFromA4('E', 4);
+            steps = HalfStepsFromA4('F', 4);
+            steps = HalfStepsFromA4('G', 4);
         }
     }
 }

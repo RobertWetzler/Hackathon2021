@@ -3,6 +3,7 @@ using Cynthesizer;
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using NAudio.Wave.SampleProviders;
 
 namespace Cynthesizer
 {
@@ -27,11 +28,32 @@ namespace Cynthesizer
             NoteFrequency.NoteToHz('A', 4, ' ');
             NoteFrequency.NoteToHz('B', 4, ' ');
             NoteFrequency.NoteToHz('C', 4, ' ');
-            var c4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('C', 4, ' '), 0);
-            var e4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('E', 4, ' '), 0);
-            var g4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('G', 4, ' '), 0);
+            SignalGenerator c4Wave = new SignalGenerator()
+            {
+                Gain = 0.2,
+                Frequency = NoteFrequency.NoteToHz('C', 4, ' '),
+                Type = SignalGeneratorType.Sin
+            };
+            SignalGenerator e4Wave = new SignalGenerator()
+            {
+                Gain = 0.2,
+                Frequency = NoteFrequency.NoteToHz('E', 4, ' '),
+                Type = SignalGeneratorType.Sin
+            };
+            SignalGenerator g4Wave = new SignalGenerator()
+            {
+                Gain = 0.2,
+                Frequency = NoteFrequency.NoteToHz('G', 4, ' '),
+                Type = SignalGeneratorType.Sin
+            };
+
+            //var c4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('C', 4, ' '), 0);
+            //var e4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('E', 4, ' '), 0);
+            //var g4Wave = new SineWaveProvider(44100, NoteFrequency.NoteToHz('G', 4, ' '), 0);
+
             List<ISampleProvider> notes = new List<ISampleProvider> { c4Wave, e4Wave, g4Wave };
-            var cChord = new AdditiveWaveProvider(notes);
+            //var cChord = new AdditiveWaveProvider(notes);
+            MixingSampleProvider cChord = new MixingSampleProvider(notes);
             using (var wo = new NAudio.Wave.WaveOutEvent())
             {
                 wo.Init(cChord);
